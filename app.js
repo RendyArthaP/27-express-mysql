@@ -37,6 +37,7 @@ app.get('/', (req, res) => {
   })
 })
 
+// GET USER
 app.get('/user', (req, res) => {
   connection.query(queryUser, (err, data) => {
     if(err) {
@@ -45,6 +46,46 @@ app.get('/user', (req, res) => {
       res.json(data)
     }
   })
+})
+
+// GET USER BY ID
+app.get('/user/:id', (req, res) => {
+  const id = req.params.id
+  connection.query(
+    `${queryUser} WHERE user.id = ${id}`,
+    (err, data) => {
+      if(err) {
+        console.log(err)
+      } else {
+        res.json(data)
+      }
+    }
+  )
+})
+
+// GET PRODUCT
+app.get('/product', (req, res) => {
+  connection.query(queryProduct, (err, data) => {
+    if(err) {
+      console.log(err)
+    } else {
+      res.json(data)
+    }
+  })
+})
+
+app.get('/product/:id', (req, res) => {
+  const id = req.params.id
+  connection.query(
+    `${queryProduct} WHERE product.id = ${id}`,
+    (err, data) => {
+      if(err) {
+        console.log(err)
+      } else {
+        res.json(data)
+      }
+    }
+  )
 })
 
 app.listen(port, (req, res) => {
