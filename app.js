@@ -74,10 +74,37 @@ app.get('/product', (req, res) => {
   })
 })
 
+// GET PRODUCT BY ID
 app.get('/product/:id', (req, res) => {
   const id = req.params.id
   connection.query(
     `${queryProduct} WHERE product.id = ${id}`,
+    (err, data) => {
+      if(err) {
+        console.log(err)
+      } else {
+        res.json(data)
+      }
+    }
+  )
+})
+
+// GET ORDERS
+app.get('/orders', (req, res) => {
+  connection.query(queryOrder, (err, data) => {
+    if(err) {
+      console.log(err)
+    } else {
+      res.json(data)
+    }
+  })
+})
+
+// GET ORDERS BY ID
+app.get('/orders/:id', (req, res) => {
+  const id = req.params.id
+  connection.query(
+    `${queryOrder} WHERE orders.id = ${id}`,
     (err, data) => {
       if(err) {
         console.log(err)
