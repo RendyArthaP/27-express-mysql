@@ -20,9 +20,30 @@ connection.connect((err) => {
   }
 })
 
+const queryUser = `SELECT * FROM user`
+
+const queryProduct = `SELECT * FROM product`
+
+const queryOrder = `
+  SELECT orders.id, user.user, product.namaProduk as product, product.harga, orders.totalHarga 
+  FROM orders 
+  JOIN user on orders.userID = user.id
+  JOIN product on orders.productID = product.id
+`
+
 app.get('/', (req, res) => {
   res.json({
     message: "Success"
+  })
+})
+
+app.get('/user', (req, res) => {
+  connection.query(queryUser, (err, data) => {
+    if(err) {
+      console.log(err)
+    } else {
+      res.json(data)
+    }
   })
 })
 
