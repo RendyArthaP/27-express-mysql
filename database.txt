@@ -1,0 +1,53 @@
+use onlineshop;
+
+CREATE TABLE user (
+	id int PRIMARY KEY AUTO_INCREMENT,
+    user varchar(50),
+    alamat varchar(200),
+    kode_pos int
+);
+
+CREATE TABLE product (
+	id int PRIMARY KEY AUTO_INCREMENT,
+    namaProduk varchar(100),
+    deskripsi varchar(200),
+    harga int
+);
+
+CREATE TABLE orders (
+	id int PRIMARY KEY AUTO_INCREMENT,
+    userID int,
+    productID int,
+    date_order date,
+    totalHarga int,
+    FOREIGN KEY(userID) references user(id),
+    FOREIGN KEY(productID) references product(id)
+);
+
+INSERT INTO user (user, alamat, kode_pos) VALUES 
+('RENDY', 'BOGOR', '123456'),
+('BAMBANG', 'JAKARTA', '123457'),
+('EDY', 'KEMANG', '123458'),
+('HENDRA', 'PANCORAN', '124456'),
+('ARTHA', 'BEKASI', '123466'),
+('PRAWIRA', 'TANGERANG', '223456');
+
+INSERT INTO product (namaProduk, deskripsi, harga) VALUES
+('SEPATU', 'NYAMAN DIPAKAI', '80000'),
+('SANDAL', 'NYAMAN DIPAKAI', '90000'),
+('KAOS', 'NYAMAN DIPAKAI', '70000'),
+('KEMEJA', 'NYAMAN DIPAKAI', '60000'),
+('TOPI', 'NYAMAN DIPAKAI', '50000');
+
+INSERT INTO orders (userID, productID, date_order, totalHarga) VALUES
+(1, 1, '2021-01-02', 100000),
+(2, 2, '2021-01-02', 100000),
+(3, 3, '2021-01-02', 100000),
+(4, 4, '2021-01-02', 100000),
+(5, 5, '2021-01-02', 100000),
+(6, 1, '2021-01-02', 100000);
+
+SELECT orders.id, user.user, product.namaProduk as product, product.harga, orders.totalHarga FROM orders 
+JOIN user on orders.userID = user.id
+JOIN product on orders.productID = product.id
+WHERE userID = 2
